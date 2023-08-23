@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Admin panel</title>
+</head>
+<body>
+<div class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="navbar-brand text-white">
+            <b><span th:text="${user.getEmail()}"></span></b>
+            <span>with roles:</span>
+            <span th:text="${user.getRolesToString()}"></span>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-dark text-secondary">Logout</button>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-2 my-3">
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="/admin" class="nav-link active">Admin</a>
+            </li>
+            <li>
+                <a href="/user" class="nav-link">User</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col bg-light min-vh-100 me-3">
+        <h1 class="pt-2">Admin panel</h1>
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/admin">Users table</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/admin/add">New User</a>
+            </li>
+        </ul>
+        <div class="border">
+            <h5 class="m-3">Add new user</h5>
+            <hr/>
+            <div class="w-25 mx-auto text-center">
+                <form th:action="@{/admin}"
+                      th:object="${newUser}"
+                      method="POST">
+
+                    <b><label for="name">First name </label></b>
+                    <p><input class="form-control" type="text" th:field="*{firstName}" id="name"></p>
+
+                    <b><label for="lastName">LastName: </label></b>
+                    <p><input class="form-control" type="text" th:field="*{lastName}" id="lastName"></p>
+
+                    <b><label for="age">Age</label></b>
+                    <p><input class="form-control" type="number" th:field="*{age}" id="age"></p>
+
+                    <b><label for="email">Email: </label></b>
+                    <p><input class="form-control" type="text" th:field="*{email}" id="email"></p>
+
+                    <b><label for="password">Password: </label></b>
+                    <p><input class="form-control" type="password" th:field="*{password}" id="password"></p>
+
+                    <label for="roles"><b>Role</b></label>
+                    <select  class="form-control"
+                             id="roles"
+                             size="2"
+                             th:name="roles"
+                             th:value="*{roles}">
+                        <option th:each="role: ${roles}"
+                                th:value="${role.getId()}"
+                                th:text="${role.getName()}">
+                        </option>
+                    </select>
+
+                    <button th:type="submit" class="btn btn-success btn-lg m-3">Add new user
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+</body>
+</html>
