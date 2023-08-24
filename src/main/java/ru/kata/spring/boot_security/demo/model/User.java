@@ -25,6 +25,7 @@ public class User implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
     private byte age;
+    @Column(unique = true)
     private String email;
 
 
